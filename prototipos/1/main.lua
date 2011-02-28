@@ -3,11 +3,12 @@ require "player.lua"
 require "collisionmanager.lua"
 require "enemy.lua"
 require "basicplatform.lua"
+require "physics.lua"
 
 function love.load()
     love.filesystem.setIdentity("platformerprototype1")
     
-    love.graphics.setMode(640, 480, false, true, 0)
+    love.graphics.setMode(800, 600, false, true, 0)
     love.graphics.setCaption("Platformer Prototype")
 
     CollisionManager = CollisionManagerBuilder:new()
@@ -57,6 +58,8 @@ function love.load()
     CollisionManager:addCollisionTables({player}, enemyList)
     CollisionManager:addCollisionTables({player}, {platform1})
     CollisionManager:addCollisionTables(playerWeaponsList, enemyList)
+
+    physics = PhysicsBuilder:new()
 end
 
 function love.draw()
@@ -73,6 +76,7 @@ function love.update(dt)
     removeItems(drawableListRemove, drawableList)
     removeItems(enemyListRemove, enemyList)
     removeItems(playerWeaponsListRemove, playerWeaponsList)
+    removeItems(physObjListRemove, physicalobject)
 end
 
 function removeItems(itemsToRemove, source)
